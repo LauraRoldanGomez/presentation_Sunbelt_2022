@@ -1,0 +1,322 @@
+---
+title: "Why do armed conflicts last so long? "
+author: "Laura Roldan-Gomez"
+date: "(Sys.time(), '%B, %Y')"
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: ["default", "rladies", "rladies-fonts"]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+
+---
+class: center, middle, bg_karl
+# Why do armed conflicts last so long?
+### Laura Roldan-Gomez 
+### `r format(Sys.time(), '%B, %Y')`
+
+```{css, echo = F}
+.bg_karl {
+  position: relative;
+  z-index: 1;
+}
+
+.bg_karl::before {    
+      content: "";
+      background-image: url(images/marquetalia-tirofijo.jpeg);
+      background-size: cover;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      opacity: 0.5;
+      z-index: -1;
+}
+```
+
+---
+background-image: url(images/active_conflicts.png), url(images/fatalities.png) 
+background-size: 40%, 45%
+background-position: 95% 5%, 5% 125%
+# Why care about this question?
+
+There is no such thing as peace, just times where we are not in war... <br>
+
+Clausewitz
+
+- What if we could change this? 
+
+- Humanitarian reason - Devastating 
+<br>
+
+- Developmental reason - Pervasive
+<br>
+
+- Logical reason - Winners?
+<br>
+
+- Practical reason - The longer the war, the harder it is to end
+
+---
+background-image: url(images/colombia.png), url(images/persistence.png) 
+background-size: 45%, 50%
+background-position: 95% 5%, 5% 90%
+
+# The Colombian Armed Conflict
+
+.pull-left[
+- Long-lasting civil conflict
+<br>
+
+- Mainly between the government and two guerrilla groups
+<br>
+
+- But actually, multiple actors: paramilitary, drug lords, common delinquents, sub-branches
+<br>
+
+- Many wars in one
+]
+
+---
+background-image: url(images/attacks_victims_co.jpeg), url(images/attacks.png)
+background-size: 60%, 30%
+background-position: 10% 75%, 95% 20%
+
+# Pervasive and tricky
+
+
+---
+background-image: url(images/peaceattempts.png)
+background-size: 60%
+background-position: 50% 75%
+
+# And resistant
+
+---
+background-image: url(images/complexity.png)
+background-size: 50%
+background-position: 95% 75%
+
+# Approach to this question
+
+.pull-left[
+- Conflicts are increasingly complex and full of uncertainty
+<br>
+
+- All conflicts end up being different due to contextual features
+
+- What they all have in common = attacks
+<br>
+
+- Attacks are interdependent, so...
+
+- Linear models are not fit for this analysis
+<br>
+
+so...
+
+- We need methods that can deal with interdependence.
+]
+
+---
+background-image: url(images/network.png), url(images/sequence.gif)
+background-size: 40%, 40%
+background-position: 10% 70%, 85% 70%
+
+# What I propose
+
+**Any conflict is essentially the aggregation of attacks that produce a certain amount of fatalities in one year**
+
+.pull-left[
+That would look like this:
+]
+
+.pull-right[
+If we unravel that messy network, we would get a sequence of attacks like this:
+]
+
+---
+# Relational Event Model
+
+Once we have a sequence of events, we can use relational event models to try and identify patterns within this aggregate of micro-dynamics
+
+
+.pull-left[
+## Inertia: 
+armed groups tend to continue to attack those they attacked the most in the past.
+<br><br>
+
+```{r, echo = FALSE, out.width='80%'}
+knitr::include_graphics(c("images/inertiapast.png", "images/inertiafuture.png"))
+```
+]
+
+.pull-right[
+## Reciprocity: 
+armed groups tend to attack those armed groups that attacked them the most in the past.
+<br><br>
+
+```{r, echo = FALSE, out.width='80%'}
+knitr::include_graphics(c("images/retaliationpast.png", "images/retaliationfuture.png"))
+```
+
+]
+
+---
+
+# Participation Shifts
+
+Refer to the ‘moment-by-moment shuffling’ of roles of the actors participating in an armed conflict (Gibson 2003). 
+<br><br>
+
+In the context of conflict, these roles can be partitioned into an attacker, a target, and an unidentified recipient (i.e., civilian). 
+<br><br>
+
+So, a participation shift happens when an actor plays the role of a target in one event and shifts to the attacker in the next event. 
+
+```{r, echo = FALSE, out.width='80%'}
+knitr::include_graphics(c("images/ps_inertia.png", "images/ps_reciprocity.png"))
+```
+
+---
+# Hypotheses
+
+The micro-dynamics of attacks play an important role in the duration of a civil war. By looking at this basic unit, we can understand the mechanisms that drive the emergence of these interactions, what motivates an actor to attack, and what happens after an attack.
+<br><br>
+
+<table border="0" bordercolor="black" align="center">
+    <tr>
+        <th>Hypothesis</th>
+        <th>Parameter</th>
+        <th>Interpretation</th>
+    </tr>
+    <tr>
+        <td>H<sub>1</sub>:</td>
+        <td>Inertia</th>
+        <td>Armed groups will tend to attack those armed groups they have attacked the most in the past</th>
+    </tr>
+    <tr>
+        <td>H<sub>2</sub>:</td>
+        <td>Recency on inertia</th>
+        <td>Armed groups will tend to attack with higher frequency those groups they have recently attacked</th>
+    </tr>
+    <tr>
+        <td>H<sub>3</sub>:</td>
+        <td>Reciprocity</th>
+        <td>Armed groups will tend to attack those armed groups that attacked them the most in the past</th>
+    </tr>
+    <tr>
+        <td>H<sub>4</sub>:</td>
+        <td>Recency on reciprocity</th>
+        <td>armed groups will tend to reciprocate attacks from those armed groups that recently targeted them</th>
+    </tr>
+</table>
+
+
+---
+background-image: url(images/data.png), url(images/r_logo.png)
+background-size: 40%, 15%
+background-position: 30% 70%, 90% 20%
+
+# Data & Software
+
+- Observatory of memory and conflict
+- Relevent package - Carter Butts, 2008
+
+---
+# Findings Overview
+
+<br>
+
+<table border="0" bordercolor="black" align="center">
+    <tr>
+        <th>Hypothesis</th>
+        <th>Parameter</th>
+        <th>Supported</th>
+        <th>Interpretation</th>
+    </tr>
+    <tr>
+        <td>H<sub>1</sub>:</th>
+        <td>Inertia</th>
+        <td>Yes: + and significant</th>
+        <td>The more an armed group has attacked another group in the past, the more likely they are to do so in the future.</th>
+    </tr>
+    <tr>
+        <td>H<sub>2</sub>:</th>
+        <td>Recency on inertia</th>
+        <td>Yes: + and significant. </th>
+        <td>Armed groups tend to attack those groups they have recently attacked.</th>
+    </tr>
+    <tr>
+        <td>H<sub>3</sub>:</th>
+        <td>Reciprocity</th>
+        <td>No: - and mostly significant</th>
+        <td>Armed groups do not tend to reciprocate attacks directed at them (Amazon, Andes and Pacific).</th>
+    </tr>
+    <tr>
+        <td>H<sub>4</sub>:</th>
+        <td>Recency on reciprocity</th>
+        <td>Yes: + and significant (lower than H<sub>2</sub>)</th>
+        <td>Armed groups tend to reciprocate recent attacks.</th>
+    </tr>
+    <tr>
+        <td>H<sub>5</sub>:</th>
+        <td>Inertia PShift</th>
+        <td>Yes</th>
+        <td>Armed groups tend to hold onto their roles as attackers.
+        </th>
+    </tr>
+    <tr>
+        <td>H<sub>6</sub>:</th>
+        <td>Reciprocity PShift</th>
+        <td>No</th>
+        <td>Armed groups tend to avoid reciprocating attacks.</th>
+    </tr>
+</table>
+
+---
+class: left, top
+
+# Conclusions and a Note on Limitations
+
+--
+
+- **In the long run, the conflict in Colombia seems to be driven by a strategy of attack rather than by one of defense.**
+<br><br>
+
+--
+
+- **However, recent events seem to tell a different story. Both mechanisms, inertia and reciprocity are at play when the recency factor is taken into consideration**
+<br><br>
+
+--
+
+- **The data has an important limitation: the direction of the attacks is not known for attacks between paramilitary groups and rebel groups**
+<br><br>
+
+- **I tackled this issue by using a data imputation process using a Bernoulli distribution.**
+
+---
+class: center, middle, bg_karl
+# The End
+
+---
+# Illustration references
+
+Cover: https://andeancommunity.wordpress.com/seminar-3/
+
+Conflict 2019: Raul Arboleda/AFP
+
+Complexity: https://creativeconflictwisdom.files.wordpress.com/2010/06/picture1-powerpoint1.jpg
+
+---
+background-image: url(images/coefficients.png)
+background-size: 80%
+background-position: 50% 50%
+
+# Table of Coefficients
